@@ -6,8 +6,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BE_IMAGE_NAME: ${{ github.repository }}-sba-backend
-  FE_IMAGE_NAME: ${{ github.repository }}-sba-frontend
 
 jobs:
   test-backend:
@@ -54,12 +52,12 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ env.REGISTRY }}/${REPO}-sba-backend:latest
+          tags: ${{ env.REGISTRY }}/${{env.REPO}}-sba-backend:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
           push: true
-          tags: ${{ env.REGISTRY }}/${REPO}-sba-frontend:latest
+          tags: ${{ env.REGISTRY }}/${{env.REPO}}-sba-frontend:latest
 
