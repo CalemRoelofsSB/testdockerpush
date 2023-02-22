@@ -45,17 +45,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: lowercase-repo-name
+        run: |
+          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
       - name: Build and push backend Docker image
         uses: docker/build-push-action@v4
         with:
           context: ./backend
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.BE_IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${REPO}-sba-backend:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.FE_IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${REPO}-sba-frontend:latest
 
